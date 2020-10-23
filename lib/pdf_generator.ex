@@ -116,7 +116,7 @@ defmodule PdfGenerator do
   @type url           :: binary()
   @type html          :: binary()
   @type pdf_file_path :: binary()
-  @type content       :: html | {:ok, url}
+  @type content       :: html | {:url | :html, url}
   @type reason        :: atom() | {atom(), any}
   @type opts          :: keyword()
   @type path          :: binary()
@@ -313,7 +313,7 @@ defmodule PdfGenerator do
     result = generate_binary html, options
     case result do
       {:ok, content}   -> content
-      {:error, reason} -> raise "in-place generation failed: " <> reason
+      {:error, reason} -> raise "in-place generation failed: #{inspect(reason)}"
     end
   end
 
@@ -324,7 +324,7 @@ defmodule PdfGenerator do
     result = generate html, options
     case result do
       {:ok, filename}  -> filename
-      {:error, reason} -> raise "HTML generation failed: " <> reason
+      {:error, reason} -> raise "HTML generation failed: #{inspect(reason)}"
     end
   end
 end
