@@ -57,18 +57,13 @@ defmodule PdfGenerator do
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
   # for more information on OTP Applications
   def start(_type, _args) do
-      import Supervisor.Spec, warn: false
-
       children = [
         # Define workers and child supervisors to be supervised
-        # worker(TestApp.Worker, [arg1, arg2, arg3])
-        worker(
-          PdfGenerator.PathAgent, [[
+        {PdfGenerator.PathAgent,
             wkhtml_path:                         Application.get_env(:pdf_generator, :wkhtml_path),
             pdftk_path:                          Application.get_env(:pdf_generator, :pdftk_path),
             raise_on_missing_wkhtmltopdf_binary: Application.get_env(:pdf_generator, :raise_on_missing_wkhtmltopdf_binary, true),
-          ]]
-        )
+        }
       ]
 
       opts = [strategy: :one_for_one, name: PdfGenerator.Supervisor]

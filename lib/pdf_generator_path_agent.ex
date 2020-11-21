@@ -1,4 +1,5 @@
 defmodule PdfGenerator.PathAgent do
+  use Agent
   require Logger
   defstruct [
     wkhtml_path: nil,
